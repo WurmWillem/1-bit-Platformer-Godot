@@ -3,13 +3,13 @@ using System;
 
 public class Player : KinematicBody2D
 {
-	private const int ACCELERATION = 512;
-	private const int MAXSPEED = 85;
-	private const float FRICTION = 0.2f;
-	private const float AIRFRICTION = 0.03f;
+	private const int ACCELERATION = 550;
+	private const int MAXSPEED = 90;
+	private const float FRICTION = 0.4f;
+	private const float AIRFRICTION = 0f; //0.03
 	private const float AIRFRICTIONWITHINPUT = 0.01f;
-	private const int GRAVITY = 200;
-	private const int JUMPFORCE = 128;
+	private const int GRAVITY = 250; //200
+	private const int JUMPFORCE = 140; //128
 	
 	private float fallMult = 1f;
 	
@@ -20,12 +20,26 @@ public class Player : KinematicBody2D
 	
 	public override void _Ready()
 	{
-		sprite = GetNode<Sprite>("Sprite");
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		sprite = GetNode<Sprite>("Sprite");
+	}
+	
+	public override void _Process(float delta) 
+	{
+		var mouseInput = Input.GetActionStrength("click");
+		
+		if (mouseInput == 1) 
+		{
+			GD.Print("click at " + GetViewport().GetMousePosition());
+		}
+		
+		//GetNode<Sprite>("/root/Test/Cursor").Position = GetViewport().GetMousePosition();
+		
 	}
 	
 	public override void _PhysicsProcess(float delta)
 	{
+		
 		var xInput = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left"); // Get input: 0,1 or 2
 		
 		if (xInput != 0) 
@@ -37,7 +51,7 @@ public class Player : KinematicBody2D
 			
 			sprite.FlipH = xInput < 0;
 		}
-		else { animationPlayer.Play("Stand"); }
+		else { animationPlayer.Play("Stand"); } 
 		
 		
 		
@@ -61,21 +75,26 @@ public class Player : KinematicBody2D
 			
 			fallMult = 1f;
 			
-			if (motion.y >= 0) { fallMult = 1.75f; }
+			if (motion.y >= 0f) { fallMult = 1.75f; }
 			
 			if (xInput == 0)  { motion.x = Mathf.Lerp(motion.x, 0, AIRFRICTION); }
 			
 			else { motion.x = Mathf.Lerp(motion.x, 0, AIRFRICTIONWITHINPUT); }
-		}
+		} 
 		
-		motion.y += GRAVITY * fallMult * delta;
+		motion.y += GRAVITY * fallMult * delta; // Apply gravity
 		
-		//GD.Print(motion.y);
-
-		motion = MoveAndSlide(motion, Vector2.Up); // Apply force the kinematic body 2D
+		motion = MoveAndSlide(motion, Vector2.Up); // Apply forces to the kinematic body 2D
 		
-		//GD.Print(MoveAndSlide(motion, Vector2.Up));
+	}
+	
+	public void _on_Heart_body_entered(object body)
+	{
+		GetTree().ChangeScene("res://Level Select.tscn");
 	}
 	
 	
 }
+
+
+
