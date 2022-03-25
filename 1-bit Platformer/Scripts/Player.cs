@@ -24,19 +24,6 @@ public class Player : KinematicBody2D
 		sprite = GetNode<Sprite>("Sprite");
 	}
 	
-	public override void _Process(float delta) 
-	{
-		var mouseInput = Input.GetActionStrength("click");
-		
-		if (mouseInput == 1) 
-		{
-			GD.Print("click at " + GetViewport().GetMousePosition());
-		}
-		
-		//GetNode<Sprite>("/root/Test/Cursor").Position = GetViewport().GetMousePosition();
-		
-	}
-	
 	public override void _PhysicsProcess(float delta)
 	{
 		
