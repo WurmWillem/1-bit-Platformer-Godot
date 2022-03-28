@@ -16,7 +16,7 @@ func _ready():
 #	pass
 
 
-func _on_Area2D_input_event(event):
+func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			get_tree().change_scene("res://Level 1.tscn")
@@ -26,3 +26,9 @@ func _on_Lvl_2_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			get_tree().change_scene("res://Level 2.tscn")
+
+
+func _on_Lvl_3_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			get_tree().change_scene("res://Level 3.tscn")
