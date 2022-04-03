@@ -210,10 +210,9 @@ public class Player : KinematicBody2D
 
 		if (currentScene == "Level 1") { GetTree().ChangeScene("res://Level 2.tscn"); }
 		if (currentScene == "Level 2") { GetTree().ChangeScene("res://Level 3.tscn"); }
-		if (currentScene == "Level 3") { GetTree().ChangeScene("res://Level 4.tscn"); }
+		if (currentScene == "Level 3") { GetTree().ChangeScene("res://Level select.tscn"); }
 		if (currentScene == "Level 4") { GetTree().ChangeScene("res://Level 5.tscn"); }
 	}
-	
 	public void SpikesEntered(object body)
 	{
 		if (body is KinematicBody2D) {
